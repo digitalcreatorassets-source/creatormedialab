@@ -1204,8 +1204,17 @@
       document.getElementById("modalIcon").innerText = meta.icon;
       document.getElementById("modalTitle").innerText = `${meta.name} (Live Responsive Preview)`;
       
+      const staticMap = {
+        creator_pulse: 'preview-creator-pulse.html',
+        studio_wire: 'preview-studio-wire.html',
+        creator_blueprint: 'preview-creator-blueprint.html',
+        dispensary_deals: 'preview-dispensary-deals.html'
+      };
+      const isStatic = window.location.hostname.includes('github.io') || window.location.protocol === 'file:';
+      const targetSrc = isStatic ? staticMap[pubId] : `/api/newsletter/preview?pub=${pubId}`;
+
       const iframe = document.getElementById("previewIframe");
-      iframe.src = `/api/newsletter/preview?pub=${pubId}`;
+      iframe.src = targetSrc;
       
       setDeviceView('desktop');
       document.getElementById("previewModal").classList.add("open");
